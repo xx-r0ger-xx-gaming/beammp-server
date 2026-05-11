@@ -4,11 +4,11 @@ Private BeamNG.drive multiplayer server for the Seattle crew.
 
 ## Connecting
 
-- **Direct connect:** `146.190.117.12:30814`
+- **Direct connect:** `64.23.165.84:30814`
 - Server is password protected — ask r0ger for the password
 - Max 4 players
 
-> The server droplet is powered off when not in use. If you can't connect, ping r0ger to spin it up.
+> The server shuts down automatically after 15 minutes with no players. To start it, use the [DigitalOcean console](https://cloud.digitalocean.com) or ping r0ger.
 
 ---
 
@@ -37,8 +37,9 @@ Once connected, use chat to vote on the active map. A majority of connected play
 ## Server Management (admin)
 
 ### Power on/off
-Use the [DigitalOcean console](https://cloud.digitalocean.com) to power the droplet on or off.
-- **Droplet:** `beamng-server` (ID: 568626256, region: SFO3)
+The server powers off automatically after 15 minutes idle. To start it manually:
+- Use the [DigitalOcean console](https://cloud.digitalocean.com) to power the droplet on
+- **Droplet:** `beamng-server-new` (ID: 570428643, region: SFO3)
 
 ### Adding new maps
 
@@ -52,7 +53,7 @@ Use the [DigitalOcean console](https://cloud.digitalocean.com) to power the drop
    This uploads the zip to the server, auto-detects the internal map name, and updates `maps/manifest.json`.
 5. Add an entry to the `MAPS` table in `plugins/mapvote/main.lua` with a short chat-friendly alias, then redeploy:
    ```powershell
-   scp -i "$env:USERPROFILE\.ssh\beamng_server" plugins\mapvote\main.lua root@146.190.117.12:/home/beammp/Resources/Server/mapvote/main.lua
+   scp -i "$env:USERPROFILE\.ssh\beamng_server" plugins\mapvote\main.lua root@64.23.165.84:/home/beammp/Resources/Server/mapvote/main.lua
    ```
 
 ### Switching the active map (without chat / no players online)
@@ -71,8 +72,8 @@ Shows a numbered list of maps from `maps/manifest.json` and restarts the server 
 |-|--|
 | **Host** | DigitalOcean SFO3 |
 | **OS** | Ubuntu 22.04 LTS |
-| **Size** | s-2vcpu-2gb ($18/mo) |
-| **IP** | 146.190.117.12 |
+| **Size** | s-1vcpu-1gb ($6/mo) |
+| **IP** | 64.23.165.84 |
 | **Port** | 30814 TCP+UDP |
 | **BeamMP version** | v3.9.2 |
 | **Service** | `systemd beammp.service` (starts on boot, restarts automatically) |
