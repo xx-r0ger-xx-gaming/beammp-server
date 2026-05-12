@@ -44,7 +44,7 @@ local function switchMap(mapName)
     fw:write(content)
     fw:close()
     MP.SendChatMessage(-1, "[MapVote] Switching to " .. mapName .. "! Server restarting...")
-    exit()
+    os.exit(0)
 end
 
 function onChatMessage(player_id, player_name, message)
@@ -66,7 +66,7 @@ function onChatMessage(player_id, player_name, message)
         end
         votes[player_id] = mapName
         local voteCount  = countVotes(mapName)
-        local needed     = math.floor(MP.GetPlayerCount() / 2) + 1
+        local needed     = math.floor(#MP.GetPlayers() / 2) + 1
         MP.SendChatMessage(-1, "[MapVote] " .. player_name .. " voted for " .. mapName ..
             " (" .. voteCount .. "/" .. needed .. " needed)")
         if voteCount >= needed then
@@ -80,3 +80,8 @@ end
 function onPlayerDisconnect(player_id)
     votes[player_id] = nil
 end
+
+MP.RegisterEvent("onChatMessage", "onChatMessage")
+MP.RegisterEvent("onPlayerDisconnect", "onPlayerDisconnect")
+
+print("[MapVote] Plugin loaded")
